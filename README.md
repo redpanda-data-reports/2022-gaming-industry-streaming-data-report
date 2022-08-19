@@ -1,1 +1,1 @@
-# 2022-gaming-industry-streaming-report
+# 2022-gaming-industry-streaming-data-report
