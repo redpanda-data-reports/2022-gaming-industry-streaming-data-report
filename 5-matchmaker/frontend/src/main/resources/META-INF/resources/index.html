@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Matchmaking Demo</title>
+
+  <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
+  <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css">
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">Find Matching Players</h2>
+      <button class="btn btn-info" id="request-match">Match Me!</button>
+      <div class="matches"></div>
+    </div>
+  </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $("#request-match").click((event) => {
+        fetch("/match/request", {method: "POST"})
+        .then(res => res.text())
+        .then(response => {
+            $("#request-match").attr("disabled","disabled");
+        });
+    });
+
+    var source = new EventSource("/match");
+    source.onmessage = (event) => {
+      var json = JSON.parse(event.data);
+      $.each(json.players, function(key, value) {
+         var row = $(`<h4 class='col-md-12'><strong>Name: </strong> ${value}</h4>`);
+         $(".matches").prepend(row);
+      });
+    };
+</script>
+</html>

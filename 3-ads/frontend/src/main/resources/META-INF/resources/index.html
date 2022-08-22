@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Personalized Ads Demo</title>
+
+  <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
+  <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css">
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">Personalized Ads</h2>
+      <div class="pf-c-hint">
+        <div class="pf-c-hint__body">
+          Publish a series of consecutive loss events to the game. Then wait until a relevant ad
+          appears below.
+        </div>
+      </div>
+      <div id="ad"></div>
+    </div>
+  </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var source = new EventSource("/ads");
+    source.onmessage = (event) => {
+      var ad = JSON.parse(event.data);
+      $("#ad").html("<h3>" + ad.title + "</h3><p>" + ad.content + "</p>");
+    };
+</script>
+</html>

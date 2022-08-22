@@ -1,0 +1,33 @@
+{
+    "schemaName": "events",
+    "dimensionFieldSpecs": [
+        {
+            "name": "id",
+            "dataType": "STRING"
+        },
+        {
+            "name": "player_id",
+            "dataType": "INT"
+        },
+        {
+            "name": "type",
+            "dataType": "STRING"
+        },
+        {
+            "name": "app_version",
+            "dataType": "STRING"
+        },
+        {
+            "name": "payload",
+            "dataType": "STRING"
+        }
+    ],
+    "dateTimeFieldSpecs": [
+        {
+            "name": "ts",
+            "dataType": "LONG",
+            "format": "1:MILLISECONDS:EPOCH",
+            "granularity": "1:MILLISECONDS"
+        }
+    ]
+}
