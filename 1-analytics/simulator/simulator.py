@@ -2,12 +2,12 @@ import random, time, json, uuid, os
 from kafka import KafkaProducer
 
 #Iterations for each event type
-newUserCount        = 1
-gameStartCount      = 1
-errorCount          = 1
-transactionCount    = 1
-gameCompletionCount = 1
-delay               = 200
+newUserCount        = 500
+gameStartCount      = 350
+errorCount          = 50
+transactionCount    = 100
+gameCompletionCount = 100
+delay               = 1000
 
 versions            = [ "v1", "v2", "v3"]
 levels              = [1,2,3,4,5]
@@ -20,7 +20,7 @@ def generateNewRegistration():
         "id": str(uuid.uuid4()),
         "player_id": random.randint(1,10000),
         "type": "NEW_USER",
-        "app_version": random.randint(10,1000),
+        "app_version": random.choice(versions),
         "ts": int(time.time()),
         "payload": {}
     }
