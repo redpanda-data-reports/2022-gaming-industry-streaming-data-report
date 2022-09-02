@@ -1,4 +1,4 @@
-import random, time, json, uuid, os
+import random, time, json, uuid, os, datetime
 from kafka import KafkaProducer
 
 #Iterations for each event type
@@ -7,7 +7,7 @@ gameStartCount      = 350
 errorCount          = 50
 transactionCount    = 100
 gameCompletionCount = 100
-delay               = 1000
+delay               = 100
 
 versions            = [ "v1", "v2", "v3"]
 levels              = [1,2,3,4,5]
@@ -21,7 +21,7 @@ def generateNewRegistration():
         "player_id": random.randint(1,10000),
         "type": "NEW_USER",
         "app_version": random.choice(versions),
-        "ts": int(time.time()),
+        "created_at": datetime.datetime.now().isoformat(),
         "payload": {}
     }
 
@@ -30,7 +30,7 @@ def generateGameStart():
         "id": str(uuid.uuid4()),
         "player_id": random.randint(1,10000),
         "type": "GAME_STARTED",
-        "ts": int(time.time()),
+        "created_at": datetime.datetime.now().isoformat(),
         "payload": {}
     }
 
@@ -40,7 +40,7 @@ def generateError():
         "player_id": random.randint(1,10000),
         "type": "APPLICATION_ERROR",
         "app_version": random.choice(versions),
-        "ts": int(time.time()),
+        "created_at": datetime.datetime.now().isoformat(),
         "payload": {}
     }
 
@@ -51,7 +51,7 @@ def generateTransaction():
         "id": str(uuid.uuid4()),
         "player_id": random.randint(1,10000),
         "type": "TRANSACTION",
-        "ts": int(time.time())
+        "created_at": datetime.datetime.now().isoformat(),
     }
     event['payload'] = payload
     return event
@@ -61,7 +61,7 @@ def generateGameCompletion():
         "id": str(uuid.uuid4()),
         "player_id": random.randint(1,10000),
         "type": "GAME_COMPLETED",
-        "ts": int(time.time()),
+        "created_at": datetime.datetime.now().isoformat(),
         "payload": {"level_completed": random.choice(levels)}
     }
 

@@ -51,22 +51,22 @@ st.plotly_chart(fig, use_container_width=True)
 
 st.subheader('New User Registrations')
 
-# query = """
-# select
-# ToDateTime(DATETRUNC('minute', ts), 'yyyy-MM-dd hh:mm:ss') AS dateMin, 
-# count(*) AS events
-# from events 
-# where ts > ago('PT1H') and type='NEW_USER'
-# group by dateMin
-# order by dateMin desc
-# LIMIT 30
-# """
+query = """
+select
+ToDateTime(DATETRUNC('minute', ts), 'yyyy-MM-dd hh:mm:ss') AS dateMin, 
+count(*) AS events
+from events 
+where ts > ago('PT1H') and type='NEW_USER'
+group by dateMin
+order by dateMin desc
+LIMIT 30
+"""
 
-# curs.execute(query)
-# df_ts = pd.DataFrame(curs, columns=[item[0] for item in curs.description])
-# df_ts_melt = pd.melt(df_ts, id_vars=['dateMin'], value_vars=['events'])
+curs.execute(query)
+df_ts = pd.DataFrame(curs, columns=[item[0] for item in curs.description])
+df_ts_melt = pd.melt(df_ts, id_vars=['dateMin'], value_vars=['events'])
 
-# fig = px.line(df_ts_melt, x='dateMin', y="value", color='variable', color_discrete_sequence =['blue'])
-# fig['layout'].update(margin=dict(l=0,r=0,b=0,t=40))
-# fig.update_yaxes(range=[0, df_ts["events"].max() * 1.1])
-# st.plotly_chart(fig, use_container_width=True)
+fig = px.line(df_ts_melt, x='dateMin', y="value", color='variable', color_discrete_sequence =['blue'])
+fig['layout'].update(margin=dict(l=0,r=0,b=0,t=40))
+fig.update_yaxes(range=[0, df_ts["events"].max() * 1.1])
+st.plotly_chart(fig, use_container_width=True)

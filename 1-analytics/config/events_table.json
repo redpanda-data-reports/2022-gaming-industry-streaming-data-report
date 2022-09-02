@@ -29,6 +29,17 @@
       },
       "nullHandlingEnabled": true
     },
+    "ingestionConfig": {
+      "complexTypeConfig": {
+          "delimeter": "."
+      },
+      "transformConfigs": [
+          {
+              "columnName": "ts",
+              "transformFunction": "FromDateTime(created_at, 'yyyy-MM-dd''T''HH:mm:ss.SSSSSS')"
+          }
+      ]
+    },
     "metadata": {
       "customConfigs": {}
     }
